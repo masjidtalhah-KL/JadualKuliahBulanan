@@ -31,3 +31,6 @@ jadual-kuliah-talhah*.html
 *-semua-bulan.json
 test-results/
 playwright-report/
+
+# Data jadual yang diterbitkan (backup rasmi masjid)
+!data/jadual-talhah-semua-bulan.json

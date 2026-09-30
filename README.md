@@ -18,7 +18,7 @@ Setiap staf boleh guna pautan yang sama. Tiada apa-apa perlu dipasang — cukup 
 
 ### Edisi Masjid Talhah
 
-Ini ialah cabang (*fork*) Masjid Talhah bagi projek [Kengkorok/jadual-kuliah-generator](https://github.com/Kengkorok/jadual-kuliah-generator). Perbezaan utama:
+Ini ialah edisi Masjid Talhah, dibina berdasarkan projek asal [Kengkorok/jadual-kuliah-generator](https://github.com/Kengkorok/jadual-kuliah-generator). Perbezaan utama:
 
 - Identiti masjid — nama **Masjid Talhah Bin Ubaidillah, Bukit Jalil**, logo JAWI dan gambar masjid — sudah tertanam dalam aplikasi.
 - Kod QR infaq asal masjid (butang **Guna QR asal Talhah**) disertakan untuk panel infaq, dan dipaparkan hanya jika diaktifkan.
@@ -63,6 +63,7 @@ Muat naik gambar penceramah beresolusi tinggi untuk hasil yang tajam. Eksport PN
 | `jadual-kuliah-generator.html` | Aplikasi penjana yang lengkap (kandungan berkembar, boleh dibuka terus dari komputer) |
 | `app.css`, `app-core.js`, `app-ui.js`, `profile.js`, `app-init.js`, `i18n.js` | Sumber antara muka dan logik aplikasi |
 | `tests/test-generator.cjs` | Semakan pembangunan (Playwright) |
+| `data/jadual-talhah-semua-bulan.json` | Snapshot eksport **Simpan Data** (semua bulan) — arkib backup untuk rujukan staf |
 | `docs/` | Gambar pratonton untuk dokumentasi |
 
 **Pengesahan dan pembangunan:** aplikasi diuji pada Windows dengan Edge dan Chrome; Firefox dan Safari belum diuji. Untuk menjalankan semakan: pasang Node.js, jalankan `npm install`, kemudian `npm test` (`TEST_BROWSERS` boleh mengehadkan pelayar, contohnya `msedge`). Pengguna aplikasi tidak memerlukan Node.js.
@@ -74,12 +75,12 @@ Muat naik gambar penceramah beresolusi tinggi untuk hasil yang tajam. Eksport PN
 - **Live app:** <https://masjidtalhah-kl.github.io/JadualKuliahBulanan/>
 - **Direct link:** <https://masjidtalhah-kl.github.io/JadualKuliahBulanan/jadual-kuliah-generator.html>
 
-This is the Masjid Talhah fork of [Kengkorok/jadual-kuliah-generator](https://github.com/Kengkorok/jadual-kuliah-generator), with the mosque identity, JAWI logo, building photo and donation QR bundled. Editing works entirely in the browser; PNG/PDF export loads html2canvas and jsPDF from a CDN, so it needs internet.
+This is the Masjid Talhah edition, built on the original project [Kengkorok/jadual-kuliah-generator](https://github.com/Kengkorok/jadual-kuliah-generator), with the mosque identity, JAWI logo, building photo and donation QR bundled. Editing works entirely in the browser; PNG/PDF export loads html2canvas and jsPDF from a CDN, so it needs internet.
 
-Schedules, recurring rules, speakers and uploaded images are stored in the **local browser storage of each device** — they are not stored in this repository and not shared between staff. Use **Simpan Data** / **Sandarkan semua profil** to export JSON backups and **Buka Data** to restore them on another device. Keep one access method (the GitHub Pages link) because browser storage is bound to the page origin.
+Schedules, recurring rules, speakers and uploaded images are stored in the **local browser storage of each device** — they are not stored in this repository and not shared between staff. Use **Simpan Data** / **Sandarkan semua profil** to export JSON backups and **Buka Data** to restore them on another device. A read-only exported snapshot of all months is kept in [`data/jadual-talhah-semua-bulan.json`](data/jadual-talhah-semua-bulan.json); the live, editable data stays in browser storage. Keep one access method (the GitHub Pages link) because browser storage is bound to the page origin.
 
 Development checks: install Node.js, run `npm install` then `npm test` (Edge/Chrome required). The application itself needs no installation.
 
 ## Kredit & Lesen
 
-Projek asal: [Kengkorok/jadual-kuliah-generator](https://github.com/Kengkorok/jadual-kuliah-generator). Cabang ini dilesenkan di bawah **GNU GPL v3** — lihat [LICENSE](LICENSE). Pustaka eksport: html2canvas 1.4.1 dan jsPDF 2.5.1 dari jsDelivr. Gambar serta QR masjid yang dimuat naik kekal milik pemiliknya; pratonton dalam `docs/` hanya dokumentasi.
+Projek asal: [Kengkorok/jadual-kuliah-generator](https://github.com/Kengkorok/jadual-kuliah-generator). Projek ini dilesenkan di bawah **GNU GPL v3** — lihat [LICENSE](LICENSE). Pustaka eksport: html2canvas 1.4.1 dan jsPDF 2.5.1 dari jsDelivr. Gambar serta QR masjid yang dimuat naik kekal milik pemiliknya; pratonton dalam `docs/` hanya dokumentasi.
