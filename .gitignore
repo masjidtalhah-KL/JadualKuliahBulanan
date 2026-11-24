@@ -32,5 +32,5 @@ jadual-kuliah-talhah*.html
 test-results/
 playwright-report/
 
-# Data jadual yang diterbitkan (backup rasmi masjid)
-!data/jadual-talhah-semua-bulan.json
+# Docker SQLite database
+db/

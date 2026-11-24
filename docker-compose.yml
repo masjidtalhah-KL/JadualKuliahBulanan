@@ -1,0 +1,15 @@
+services:
+  jadual:
+    build: .
+    container_name: jadual-kuliah
+    restart: unless-stopped
+    environment:
+      RETAIN_MONTHS: "3"
+      PAGE_FILE: /app/jadual-kuliah-generator.html
+      TZ: Asia/Kuala_Lumpur
+    ports:
+      # Only this PC can reach it directly; Tailscale Serve forwards tailnet devices to it.
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./db:/data
+      - ./jadual-kuliah-generator.html:/app/jadual-kuliah-generator.html:ro

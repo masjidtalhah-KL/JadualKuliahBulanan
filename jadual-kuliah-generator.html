@@ -30,7 +30,7 @@ dialog{border:1px solid var(--line);border-radius:12px;padding:25px;width:min(70
 <aside id="sidebar">
  <section class="month-section"><div class="eyebrow">JADUAL BULANAN</div><div class="month-controls"><label class="sr-only" for="monthSel">Bulan</label><select id="monthSel"></select><label class="sr-only" for="yearInput">Tahun</label><input id="yearInput" type="number" min="2020" max="2100" value="2026"></div><div id="monthSource" class="source-note"></div><div id="pendingNotice" class="notice"></div><div class="row"><button id="defaultMonthBtn" class="quiet small">Pulihkan default bulan</button><button id="referenceBtn" class="quiet small">Contoh PSD</button></div><button id="donationBtn" class="quiet donation-settings-button">QR &amp; ruang infaq</button><p id="donationStatus" class="source-note" role="status"></p></section>
  <section class="editor-section"><div class="eyebrow">SUNTING KANDUNGAN</div><div class="day-heading"><h2 id="selectedDayHeading"></h2><label class="sr-only" for="dateSel">Pilih haribulan</label><select id="dateSel"></select></div><p class="muted">Klik mana-mana petak pada poster untuk menyunting.</p><div id="slotTabs" class="slot-tabs"></div>
- <form id="slotForm"><label for="librarySel">Pilih penceramah</label><select id="librarySel"><option value="">Nama sendiri / penceramah lain</option></select>
+ <form id="slotForm"><label for="librarySel">Pilih penceramah</label><input id="librarySearch" type="search" placeholder="Cari nama penceramah…" autocomplete="off" aria-label="Cari nama penceramah" style="margin-bottom:6px"><div style="display:flex;gap:6px"><select id="librarySel" style="flex:1"><option value="">Nama sendiri / penceramah lain</option></select><button id="deleteSpeakerBtn" class="danger" type="button" disabled title="Buang nama ini daripada senarai penceramah">Padam nama</button></div>
  <div class="row"><div class="field"><label for="typeSel">Sesi / program</label><select id="typeSel"><option>Kuliah Subuh</option><option>Kuliah Maghrib</option><option>Tazkirah Jumaat</option><option>Bacaan Yasin &amp; Tahlil</option><option>Ceramah Perdana</option><option>Kuliah Khas</option><option value="__custom__">Tajuk lain…</option></select></div></div>
  <label for="customTypeInput" class="sr-only">Tajuk program lain</label><input id="customTypeInput" placeholder="Tajuk program" hidden maxlength="80">
  <label for="speakerInput">Nama pada poster</label><textarea id="speakerInput" rows="2" maxlength="120" placeholder="Nama penceramah"></textarea>
@@ -40,7 +40,12 @@ dialog{border:1px solid var(--line);border-radius:12px;padding:25px;width:min(70
  <button id="saveSlotBtn" class="primary" type="submit">Simpan perubahan</button><div class="row"><button id="deleteSlotBtn" class="danger" type="button">Padam slot</button><button id="cancelSlotBtn" class="quiet" type="button">Batal</button></div></form>
  <form id="bannerForm" hidden><label for="bannerMode">Susunan acara</label><select id="bannerMode"><option value="full">Poster memenuhi petak</option><option value="mixed">Poster atas + satu kuliah bawah</option></select><label for="bannerImgInput">Gambar acara</label><input id="bannerImgInput" type="file" accept="image/png,image/jpeg,image/webp"><img id="bannerPreview" class="banner-preview" alt="Pratonton acara" hidden><label for="bannerImgFitSel">Paparan poster</label><select id="bannerImgFitSel"><option value="cover">Isi petak</option><option value="contain">Poster penuh</option></select><label for="bannerTopicInput">Keterangan (pilihan)</label><input id="bannerTopicInput" maxlength="120"><p class="muted">Dalam susunan gabungan, maksimum satu kuliah. Pilih tab kuliah untuk mengisi bahagian bawah.</p><button class="primary" type="submit">Simpan acara</button><button id="deleteBannerBtn" class="danger" type="button">Buang acara</button></form>
  <div class="day-actions"><button id="addSlotBtn" class="quiet">+ Kuliah</button><button id="addBannerBtn" class="quiet">+ Acara</button><button id="restoreDayBtn" class="text-button">Pulihkan default tarikh ini</button></div><p id="dayChangeNote" class="muted"></p></section>
- <details class="rules-section"><summary>Aturan jadual tetap</summary><p class="muted">Mengikut kejadian hari dalam bulan. Perubahan Naqib disimpan untuk bulan yang sedang disunting sahaja.</p><div id="rulesList"></div></details>
+ <details class="rules-section"><summary>Aturan jadual tetap</summary><p class="muted">Mengikut kejadian hari dalam bulan. Perubahan Naqib disimpan untuk bulan yang sedang disunting sahaja.</p><div id="rulesList"></div>
+<fieldset id="ruleAdd" style="margin-top:8px"><legend>Tambah penceramah tetap</legend>
+<label for="ruleSpeakerSel">Penceramah</label><select id="ruleSpeakerSel"></select>
+<div class="row"><select id="ruleNthSel" aria-label="Minggu"><option value="1">Minggu ke-1</option><option value="2">Minggu ke-2</option><option value="3">Minggu ke-3</option><option value="4">Minggu ke-4</option><option value="5">Minggu ke-5</option></select><select id="ruleDaySel" aria-label="Hari"><option value="1">Isnin</option><option value="2">Selasa</option><option value="3">Rabu</option><option value="4">Khamis</option><option value="5">Jumaat</option><option value="6">Sabtu</option><option value="0">Ahad</option></select></div>
+<label for="ruleTypeSel">Program</label><select id="ruleTypeSel"><option>Kuliah Maghrib</option><option>Kuliah Subuh</option><option>Tazkirah Jumaat</option></select>
+<button id="ruleAddBtn" class="primary" type="button">Tambah jadual tetap</button></fieldset></details>
  <section class="data-section"><div class="row"><button id="saveDataBtn" class="quiet">Simpan data</button><button id="loadDataBtn" class="quiet">Buka data</button></div><input id="uploadDataInput" type="file" accept="application/json,.json" hidden><p class="muted">Simpan fail data sebagai salinan sandaran untuk semua bulan dan gambar yang dimuat naik.</p></section>
 </aside>
 <section class="preview-area"><div class="preview-toolbar"><div><strong id="previewTitle">September 2026</strong><span id="previewSubtitle">Pratonton poster · A3 landskap</span></div><div class="export-controls"><label class="sr-only" for="paperSizeSel">Saiz eksport</label><select id="paperSizeSel"><option value="A3">A3 · 300 dpi</option><option value="A4">A4 · 300 dpi</option></select><button id="exportPngBtn" class="primary">Muat turun PNG</button><button id="exportPdfBtn" class="quiet">PDF</button></div></div>
@@ -502,9 +507,72 @@ const ROSTER=[
  ['alias','UST ALIAS\nABD RAHIM','30 KISAH HADIS SAHIH',2,1,'Kuliah Maghrib'],
  ['fakhruddin','USTAZ AHMAD\nFAKHRUDDIN','SYAMAIL MUHAMMADIYAH',2,2,'Kuliah Maghrib'],
  ['muhammadAli','USTAZ\nMUHAMMAD ALI','AWJAZUL MUKHTASARAT',2,3,'Kuliah Maghrib']
-].map(([id,speaker,topic,day,nth,type])=>({id,speaker,topic,day,nth,type,photo:'@'+id}));
-const FRIDAY_SPEAKERS=[['hasnol','USTAZ MOHD\nHASNOL'],['rashidi','USTAZ RASHIDI'],['mior','USTAZ MIOR\nFITRI'],['syafiq','USTAZ SYAFIQ\nZULKHAIRI'],['noruddin','USTAZ NORUDDIN\nALUWI'],['aliFikri','UST ALI FIKRI\nZAINUDDIN'],['ammar','UST AMMAR\nMUZAKKIR']].map(([id,speaker])=>({id,speaker,photo:'@'+id,topic:'UMUM',type:'Tazkirah Jumaat'}));
+].map(([id,speaker,topic,day,nth,type])=>({id,speaker:normalSpeaker(speaker),topic,day,nth,type,photo:'@'+id}));
+const FRIDAY_SPEAKERS=[['hasnol','USTAZ MOHD\nHASNOL'],['rashidi','USTAZ RASHIDI'],['mior','USTAZ MIOR\nFITRI'],['syafiq','USTAZ SYAFIQ\nZULKHAIRI'],['noruddin','USTAZ NORUDDIN\nALUWI'],['aliFikri','UST ALI FIKRI\nZAINUDDIN'],['ammar','UST AMMAR\nMUZAKKIR']].map(([id,speaker])=>({id,speaker:normalSpeaker(speaker),photo:'@'+id,topic:'UMUM',type:'Tazkirah Jumaat'}));
 const LIBRARY=[...ROSTER,...FRIDAY_SPEAKERS];
+// Every "Ustaz"/"Ust"/"Ust." title becomes "UST." (or "Ust." when the name is not in capitals).
+function normalSpeaker(value){const s=String(value??''),m=s.match(/^\s*(?:ustaz|ust)(?:\.\s*|\s+)/i);if(!m)return s;const rest=s.slice(m[0].length);if(!rest.trim())return s;return (rest===rest.toUpperCase()?'UST. ':'Ust. ')+rest;}
+function speakerSortName(value){return normalSpeaker(value).replace(/\n/g,' ').replace(/^(?:ust\.|dr\.?)\s*/i,'').trim();}
+function speakerKey(value){return normalSpeaker(value).replace(/\s/g,'').toUpperCase();}
+// Built-in roster plus every speaker saved by the user (project.speakers), one entry per name.
+// project.hiddenSpeakers holds names the user deleted from the list (built-in or own).
+function speakerLibrary(){const seen=new Set(project.hiddenSpeakers||[]),out=[];for(const p of [...LIBRARY,...(project.speakers||[])]){const k=speakerKey(p.speaker);if(!k||seen.has(k))continue;seen.add(k);out.push(p);}return out.sort((a,b)=>speakerSortName(a.speaker).localeCompare(speakerSortName(b.speaker),'ms',{sensitivity:'base'}));}
+function normalSpeakers(list){return (Array.isArray(list)?list:[]).slice(0,1000).filter(p=>p&&typeof p==='object'&&String(p.speaker||'').trim()).map(p=>({id:/^c_[a-z0-9]{1,24}$/.test(p.id)?p.id:newSpeakerId(),speaker:normalSpeaker(p.speaker).slice(0,120),topic:String(p.topic||'').slice(0,200),type:String(p.type||'Kuliah Maghrib').slice(0,80),photo:asset(p.photo)?p.photo:null}));}
+function newSpeakerId(){return 'c_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
+// Adds a speaker that is not in the list yet; refreshes the photo/topic of one the user added before.
+// explicit=true when the user saves a slot: a deleted name typed again comes back into the list.
+function rememberSpeaker(slot,explicit){
+ const name=String(slot.speaker||'').trim();if(!name)return false;const k=speakerKey(name);
+ const hidden=project.hiddenSpeakers||[];if(hidden.includes(k)){if(!explicit)return false;project.hiddenSpeakers=hidden.filter(x=>x!==k);if(LIBRARY.some(p=>speakerKey(p.speaker)===k))return true;}
+ if(LIBRARY.some(p=>speakerKey(p.speaker)===k))return false;
+ project.speakers??=[];const known=project.speakers.find(p=>speakerKey(p.speaker)===k);
+ if(known){if(slot.photo)known.photo=slot.photo;if(slot.topic&&slot.type!=='Tazkirah Jumaat')known.topic=slot.topic;if(slot.type!=='Tazkirah Jumaat'&&slot.type!=='Bacaan Yasin & Tahlil')known.type=slot.type;return true;}
+ project.speakers.push({id:newSpeakerId(),speaker:normalSpeaker(name).slice(0,120),topic:slot.type==='Tazkirah Jumaat'?'':String(slot.topic||'').slice(0,200),type:slot.type==='Bacaan Yasin & Tahlil'?'Kuliah Maghrib':slot.type,photo:asset(slot.photo)?slot.photo:null});return true;
+}
+function seedSpeakersFromMonths(){let added=false;for(const m of Object.values(project.months))for(const slots of Object.values(m.entries))for(const s of slots)if(s.type!=='Bacaan Yasin & Tahlil'&&rememberSpeaker(s))added=true;return added;}
+function renderLibraryOptions(){
+ const q=$('librarySearch').value.trim().toUpperCase().replace(/\s+/g,' '),keep=$('librarySel').value;
+ const list=speakerLibrary().filter(p=>!q||normalSpeaker(p.speaker).replace(/\s+/g,' ').toUpperCase().includes(q));
+ $('librarySel').innerHTML=`<option value="">${q?(list.length?list.length+' padanan · pilih penceramah':'Tiada padanan'):'Nama sendiri / penceramah lain'}</option>`+list.map(p=>`<option value="${escapeHtml(p.id)}">${escapeHtml(p.speaker.replace(/\n/g,' '))}</option>`).join('');
+ if(list.some(p=>p.id===keep))$('librarySel').value=keep;
+ $('deleteSpeakerBtn').disabled=!$('librarySel').value;
+ return list;
+}
+function deleteSpeaker(){
+ const p=speakerLibrary().find(x=>x.id===$('librarySel').value);if(!p)return;const name=p.speaker.replace(/\n/g,' ');
+ if(!confirm('Padam "'+name+'" daripada senarai penceramah?\n\nJadual bulan yang sudah ada tidak berubah. Nama boleh ditambah semula dengan menaip dan menyimpan slot.'))return;
+ const k=speakerKey(p.speaker);project.speakers=(project.speakers||[]).filter(x=>speakerKey(x.speaker)!==k);
+ project.hiddenSpeakers=[...new Set([...(project.hiddenSpeakers||[]),k])];
+ persist();$('librarySel').value='';renderLibraryOptions();renderRuleSpeakers();toast(name+' dipadam daripada senarai.');
+}
+// Fixed schedule: built-in ROSTER (minus project.removedRules) plus project.fixedRules added by the user.
+function activeRules(){let p;try{p=project;}catch{return ROSTER;}/* project not built yet during its own initializer */const removed=new Set(p.removedRules||[]);return [...ROSTER.filter(p=>!removed.has(p.id)),...(p.fixedRules||[])];}
+function normalRules(list){return (Array.isArray(list)?list:[]).slice(0,200).filter(r=>r&&String(r.speaker||'').trim()).map(r=>({id:/^f_[a-z0-9]{1,24}$/.test(r.id)?r.id:'f_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8),speaker:normalSpeaker(r.speaker).slice(0,120),topic:String(r.topic||'').slice(0,200),type:String(r.type||'Kuliah Maghrib').slice(0,80),photo:asset(r.photo)?r.photo:null,day:clamp(r.day,0,6,2)|0,nth:clamp(r.nth,1,5,1)|0}));}
+function renderRules(){
+ $('rulesList').innerHTML=activeRules().slice().sort((a,b)=>((a.day+6)%7)-((b.day+6)%7)||a.nth-b.nth).map(p=>`<div class="rule-item" style="display:flex;gap:8px;align-items:center"><div style="flex:1"><b>${DAYS[p.day]} ke-${p.nth} · ${escapeHtml(p.type)}</b>${escapeHtml(p.speaker.replace(/\n/g,' '))}</div><button type="button" class="danger" data-rule="${escapeHtml(p.id)}" title="Buang daripada jadual tetap">Padam</button></div>`).join('')+'<div class="rule-item"><b>Khamis setiap minggu</b>Bacaan Yasin &amp; Tahlil</div><div class="rule-item"><b>Jumaat ketiga</b>UST. MOHD HASNOL. Semua Jumaat boleh diubah mengikut arahan Naqib.</div>';
+}
+function renderRuleSpeakers(){$('ruleSpeakerSel').innerHTML='<option value="">Pilih penceramah</option>'+speakerLibrary().map(p=>`<option value="${escapeHtml(p.id)}">${escapeHtml(p.speaker.replace(/\n/g,' '))}</option>`).join('');}
+function ruleDate(r){return nthDay(current.year,current.month,r.day,r.nth);}
+function addRule(){
+ const p=speakerLibrary().find(x=>x.id===$('ruleSpeakerSel').value);if(!p){toast('Pilih penceramah dahulu.');return;}
+ const day=+$('ruleDaySel').value,nth=+$('ruleNthSel').value,type=$('ruleTypeSel').value;
+ if(activeRules().some(r=>r.day===day&&r.nth===nth&&r.type===type&&speakerKey(r.speaker)===speakerKey(p.speaker))){toast('Jadual tetap ini sudah ada.');return;}
+ const rule=normalRules([{speaker:p.speaker,topic:type==='Tazkirah Jumaat'?'UMUM':p.topic,type,photo:p.photo,day,nth}])[0];
+ (project.fixedRules??=[]).push(rule);
+ const d=ruleDate(rule);let note=' Akan digunakan untuk bulan baharu.';
+ if(d&&(current.entries[d]||[]).some(s=>speakerKey(s.speaker)===speakerKey(rule.speaker)))note=' '+d+' hb bulan ini sudah ada nama ini.';
+ else if(d&&confirm('Masukkan juga '+rule.speaker.replace(/\n/g,' ')+' ke '+d+' hb bulan yang sedang dibuka?')){const slots=current.entries[d]||[];if(slots.length>=2)note=' '+d+' hb sudah penuh, tidak dimasukkan ke bulan ini.';else{slots.push(slotFrom(rule));current.entries[d]=slots;markDayChanged(d);note=' Dimasukkan ke '+d+' hb.';}}
+ persist();renderRules();renderPoster();fillEditor();toast('Jadual tetap ditambah.'+note);
+}
+function deleteRule(id){
+ const r=activeRules().find(x=>x.id===id);if(!r)return;const name=r.speaker.replace(/\n/g,' ');
+ if(!confirm('Buang '+name+' ('+DAYS[r.day]+' ke-'+r.nth+') daripada jadual tetap?\n\nBulan baharu tidak lagi memasukkan nama ini.'))return;
+ if(ROSTER.some(x=>x.id===id))project.removedRules=[...new Set([...(project.removedRules||[]),id])];else project.fixedRules=(project.fixedRules||[]).filter(x=>x.id!==id);
+ const d=ruleDate(r),slots=d&&current.entries[d]||[],i=slots.findIndex(s=>speakerKey(s.speaker)===speakerKey(r.speaker)&&s.type===r.type);let note='';
+ if(i>=0&&confirm('Padam juga slot '+name+' pada '+d+' hb bulan yang sedang dibuka?')){slots.splice(i,1);if(slots.length)current.entries[d]=slots;else delete current.entries[d];markDayChanged(d);selectedSlot=0;note=' Slot '+d+' hb dipadam.';}
+ persist();renderRules();renderPoster();fillEditor();toast('Dibuang daripada jadual tetap.'+note);
+}
+function markDayChanged(d){if(!current.changedDays.includes(d))current.changedDays.push(d);current.dirty=true;}
 const STORAGE_KEY='jkg_talhah_v2';
 const clone=value=>JSON.parse(JSON.stringify(value));
 const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -518,7 +586,7 @@ function nthDay(y,m,day,nth){const n=1+(day-new Date(y,m,1).getDay()+7)%7+(nth-1
 function slotFrom(person){return {type:person.type,speaker:person.speaker,topic:person.topic,photo:person.photo||null,photoFit:'cover',photoZoom:1,photoY:50,fontScale:1,source:'default'};}
 function generateMonth(year,month){
  const entries={};const add=(d,s)=>{if(d)(entries[d]??=[]).push(s);};
- for(const p of ROSTER)add(nthDay(year,month,p.day,p.nth),slotFrom(p));
+ for(const p of activeRules())if(!(entries[nthDay(year,month,p.day,p.nth)]?.length>=2))add(nthDay(year,month,p.day,p.nth),slotFrom(p));
  for(let nth=1;nth<=5;nth++){
   const fri=nthDay(year,month,5,nth);if(fri)add(fri,nth===3?slotFrom(FRIDAY_SPEAKERS[0]):{type:'Tazkirah Jumaat',speaker:'',topic:'UMUM',photo:null,source:'default'});
   const thu=nthDay(year,month,4,nth);if(thu)add(thu,{type:'Bacaan Yasin & Tahlil',speaker:'',topic:'BACAAN YASIN\n& TAHLIL',photo:null,source:'default'});
@@ -529,7 +597,7 @@ function referenceMonth(month){
  const m=generateMonth(2026,month);m.source='psd';
  if(month===6){
   for(const d of [7,14,21])delete m.entries[d];
-  m.entries[15]=[{...slotFrom(ROSTER.find(p=>p.id==='arif')),speaker:'USTAZ MOHD\nJAAFARUDIN',topic:'TASAWUF',photo:'@jaafarudin',source:'reference'}];
+  m.entries[15]=[{...slotFrom(ROSTER.find(p=>p.id==='arif')),speaker:'UST. MOHD\nJAAFARUDIN',topic:'TASAWUF',photo:'@jaafarudin',source:'reference'}];
   m.entries[11][0].topic='HADITH KEHIDUPAN\nDI ALAM BARZAKH';
   for(const [d,id] of [[3,'rashidi'],[10,'mior'],[17,'hasnol'],[24,'syafiq'],[31,'noruddin']])m.entries[d]=[slotFrom(FRIDAY_SPEAKERS.find(p=>p.id===id))];
   m.entries[4]=[slotFrom(ROSTER.find(p=>p.id==='zainuddin'))];m.banners[4]={img:'@julyEvent',mode:'mixed',imgFit:'cover',topic:''};
@@ -541,21 +609,21 @@ function referenceMonth(month){
  for(const slots of Object.values(m.entries))for(const s of slots)s.source='reference';
  return m;
 }
-let project={format:'jadual-kuliah-talhah',version:2,active:'2026-09',profile:clone(DEFAULT_PROFILE),settings:{colors:{...DEFAULT_COLORS},bgTop:'#0e2642',bgBottom:'#537793',bgImage:null,compact:true,paperSize:'A3'},months:{'2026-09':referenceMonth(8),'2026-07':referenceMonth(6)}};
+let project={format:'jadual-kuliah-talhah',version:2,active:'2026-09',speakers:[],profile:clone(DEFAULT_PROFILE),settings:{colors:{...DEFAULT_COLORS},bgTop:'#0e2642',bgBottom:'#537793',bgImage:null,compact:true,paperSize:'A3'},months:{'2026-09':referenceMonth(8),'2026-07':referenceMonth(6)}};
 let current,selectedDate=1,selectedSlot=0,editMode='slot',draftPhoto=null,draftBanner=null,formDirty=false,saving=false,toastTimer,saveTimer,draftDonationQr=null,donationUploadPending=false,donationUploadVersion=0;
 let titleGraphic=asset('@title');
 const titleReady=new Promise(resolve=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=im.width+40;c.height=im.height+40;const ctx=c.getContext('2d');ctx.shadowColor='#0009';ctx.shadowBlur=12;ctx.shadowOffsetY=10;ctx.drawImage(im,20,20);titleGraphic=c.toDataURL('image/png');$('posterTitleArtwork').src=titleGraphic;resolve();};im.onerror=resolve;im.src=titleGraphic;});
 function toast(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,4000);}
-function normalSlot(s){return {type:String(s.type||'Kuliah Maghrib').slice(0,80),speaker:String(s.speaker||'').slice(0,120),topic:String(s.topic||'').slice(0,200),photo:asset(s.photo)?s.photo:null,photoFit:s.photoFit==='contain'?'contain':'cover',photoZoom:clamp(s.photoZoom,1,1.6,1),photoY:clamp(s.photoY,0,100,50),fontScale:clamp(s.fontScale,.85,1.2,1),source:s.source==='default'?'default':'manual'};}
+function normalSlot(s){return {type:String(s.type||'Kuliah Maghrib').slice(0,80),speaker:normalSpeaker(s.speaker||'').slice(0,120),topic:String(s.topic||'').slice(0,200),photo:asset(s.photo)?s.photo:null,photoFit:s.photoFit==='contain'?'contain':'cover',photoZoom:clamp(s.photoZoom,1,1.6,1),photoY:clamp(s.photoY,0,100,50),fontScale:clamp(s.fontScale,.85,1.2,1),source:s.source==='default'?'default':'manual'};}
 function normalMonth(m){
  const year=clamp(m.year,2020,2100,2026)|0,month=clamp(m.month,0,11,0)|0,n=daysInMonth(year,month);const out={year,month,entries:{},banners:{},changedDays:Array.isArray(m.changedDays)?m.changedDays.filter(d=>Number.isInteger(d)&&d>=1&&d<=n):[],source:['psd','import','default'].includes(m.source)?m.source:'import',dirty:!!m.dirty};
  for(const [d,slots] of Object.entries(m.entries||{}))if(/^\d+$/.test(d)&&+d>=1&&+d<=n&&Array.isArray(slots))out.entries[d]=slots.slice(0,2).map(normalSlot);
- for(const [d,b] of Object.entries(m.banners||{}))if(/^\d+$/.test(d)&&+d>=1&&+d<=n&&b&&asset(b.img))out.banners[d]={img:b.img,imgFit:b.imgFit==='contain'?'contain':'cover',mode:b.mode==='mixed'?'mixed':'full',topic:String(b.topic||'').slice(0,120),speaker:String(b.speaker||'').slice(0,120),speakerPhoto:asset(b.speakerPhoto)?b.speakerPhoto:null};
+ for(const [d,b] of Object.entries(m.banners||{}))if(/^\d+$/.test(d)&&+d>=1&&+d<=n&&b&&asset(b.img))out.banners[d]={img:b.img,imgFit:b.imgFit==='contain'?'contain':'cover',mode:b.mode==='mixed'?'mixed':'full',topic:String(b.topic||'').slice(0,120),speaker:normalSpeaker(b.speaker||'').slice(0,120),speakerPhoto:asset(b.speakerPhoto)?b.speakerPhoto:null};
  return out;
 }
 function normalProject(p){
  if(p.format!=='jadual-kuliah-talhah'||!p.months||typeof p.months!=='object')throw Error('Format data tidak dikenali.');
- const q=clone(project);q.months={};
+ const q=clone(project);q.months={};q.speakers=normalSpeakers(p.speakers);q.hiddenSpeakers=(Array.isArray(p.hiddenSpeakers)?p.hiddenSpeakers:[]).filter(k=>typeof k==='string'&&k&&k.length<=120).slice(0,1000);q.fixedRules=normalRules(p.fixedRules);q.removedRules=(Array.isArray(p.removedRules)?p.removedRules:[]).filter(id=>ROSTER.some(r=>r.id===id));
  for(const m of Object.values(p.months)){if(!m||typeof m!=='object')continue;const normalized=normalMonth(m);q.months[monthKey(normalized.year,normalized.month)]=normalized;}
  if(!Object.keys(q.months).length)throw Error('Fail tiada jadual yang boleh dibuka.');
  q.active=Object.hasOwn(q.months,p.active)?p.active:Object.keys(q.months)[0];
@@ -569,10 +637,36 @@ function normalDonation(value){
  if(!value||typeof value!=='object')return {...DEFAULT_DONATION};
  return {enabled:value.enabled!==false,qr:asset(value.qr)?value.qr:null,heading:String(value.heading??DEFAULT_DONATION.heading).slice(0,48),message:String(value.message??DEFAULT_DONATION.message).slice(0,96),recipient:String(value.recipient??DEFAULT_DONATION.recipient).slice(0,140),placement:value.placement==='footer'?'footer':'auto',fallback:value.fallback==='hide'?'hide':'footer'};
 }
-try{const stored=localStorage.getItem(STORAGE_KEY);if(stored)project=normalProject(JSON.parse(stored));}catch(e){$('storageWarning').hidden=false;$('storageWarning').textContent='Simpanan pelayar tidak dapat dibuka. Gunakan Buka Data jika ada salinan sandaran.';}
-current=project.months[project.active];
+// Opened through the Docker server (http/https): data lives in SQLite on the server.
+// Opened as a local file: data stays in browser localStorage as before.
+const SERVER_MODE=/^https?:$/.test(location.protocol);
+const SAVED_TEXT=SERVER_MODE?'Disimpan ke server':'Disimpan pada peranti ini';
+let serverSaveTimer,serverSaving=null,serverPending=false,serverDirty=false,serverLoadFailed=false;
+function showStorageWarning(text){$('saveStatus').textContent='Belum disimpan';$('storageWarning').hidden=false;$('storageWarning').textContent=text;}
+async function loadStored(){
+ if(SERVER_MODE){
+  try{const r=await fetch('/api/project',{cache:'no-store'});if(r.ok)project=normalProject(await r.json());else if(r.status!==404)throw Error('HTTP '+r.status);}
+  catch(e){serverLoadFailed=true;showStorageWarning('Data server tidak dapat dibuka ('+e.message+'). Perubahan tidak akan disimpan. Muat semula halaman selepas server hidup.');}
+ }else{
+  try{const stored=localStorage.getItem(STORAGE_KEY);if(stored)project=normalProject(JSON.parse(stored));}catch(e){showStorageWarning('Simpanan pelayar tidak dapat dibuka. Gunakan Buka Data jika ada salinan sandaran.');}
+ }
+ current=project.months[project.active];
+ project.speakers??=[];if(seedSpeakersFromMonths()&&!serverLoadFailed)persist();
+}
+function queueServerSave(){if(serverLoadFailed)return;serverDirty=true;$('saveStatus').textContent='Menyimpan…';clearTimeout(serverSaveTimer);serverSaveTimer=setTimeout(flushServerSave,500);}
+async function flushServerSave(){
+ clearTimeout(serverSaveTimer);if(serverLoadFailed||!serverDirty)return;
+ if(serverSaving){serverPending=true;return serverSaving;}
+ serverDirty=false;
+ serverSaving=(async()=>{
+  try{const r=await fetch('/api/project',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(project)});if(!r.ok)throw Error((await r.json().catch(()=>({}))).error||'HTTP '+r.status);if(!serverDirty){$('saveStatus').textContent=SAVED_TEXT;$('storageWarning').hidden=true;}}
+  catch(e){serverDirty=true;showStorageWarning('Tidak dapat simpan ke server ('+e.message+'). Akan cuba semula. Tekan Simpan Data untuk salinan sandaran.');serverSaveTimer=setTimeout(flushServerSave,5000);}
+  finally{serverSaving=null;if(serverPending){serverPending=false;flushServerSave();}}
+ })();
+ return serverSaving;
+}
 function persist(){
- clearTimeout(saveTimer);try{localStorage.setItem(STORAGE_KEY,JSON.stringify(project));$('saveStatus').textContent='Disimpan pada peranti ini';$('storageWarning').hidden=true;}
+ clearTimeout(saveTimer);if(SERVER_MODE){queueServerSave();return;}try{localStorage.setItem(STORAGE_KEY,JSON.stringify(project));$('saveStatus').textContent='Disimpan pada peranti ini';$('storageWarning').hidden=true;}
  catch(e){$('saveStatus').textContent='Belum disimpan';$('storageWarning').hidden=false;$('storageWarning').textContent='Storan pelayar penuh atau tidak tersedia. Jadual masih terbuka. Tekan Simpan Data sebelum menutup halaman.';}
 }
 function markChanged(){current.dirty=true;if(!current.changedDays.includes(selectedDate))current.changedDays.push(selectedDate);persist();}
@@ -660,7 +754,7 @@ function discardDraft(){return !formDirty||confirm('Perubahan dalam borang belum
 function switchMonth(year,month){if(!discardDraft()){syncMonthControls();return;}year=clamp(year,2020,2100,2026)|0;const key=monthKey(year,month);if(!project.months[key])project.months[key]=generateMonth(year,month);project.active=key;current=project.months[key];selectedDate=1;selectedSlot=0;editMode='slot';syncMonthControls();renderPoster();fillEditor();persist();}
 function selectDay(day){if(!discardDraft())return;selectedDate=+day;selectedSlot=0;editMode=current.banners[day]?'banner':'slot';$('dateSel').value=selectedDate;renderPoster();fillEditor();}
 function fillEditor(){
- formDirty=false;$('saveStatus').textContent=$('storageWarning').hidden?'Disimpan pada peranti ini':'Belum disimpan';const slots=current.entries[selectedDate]||[],banner=current.banners[selectedDate];
+ formDirty=false;$('saveStatus').textContent=$('storageWarning').hidden?(serverDirty?'Menyimpan…':SAVED_TEXT):'Belum disimpan';const slots=current.entries[selectedDate]||[],banner=current.banners[selectedDate];
  $('selectedDayHeading').textContent=DAYS[new Date(current.year,current.month,selectedDate).getDay()]+' '+selectedDate+' hb';
  $('slotTabs').innerHTML=slots.map((s,i)=>`<button type="button" data-slot="${i}" class="${editMode==='slot'&&selectedSlot===i?'active':''}">${escapeHtml(s.type.replace('Kuliah ',''))}</button>`).join('')+(banner?`<button type="button" data-banner class="${editMode==='banner'?'active':''}">Acara</button>`:'');
  $('slotForm').hidden=editMode!=='slot';$('bannerForm').hidden=editMode!=='banner';
@@ -671,7 +765,7 @@ function fillEditor(){
   const slot=slots[selectedSlot]||{type:'Kuliah Maghrib',speaker:'',topic:'',photo:null,photoFit:'cover',fontScale:1,photoZoom:1,photoY:50};
   const known=[...$('typeSel').options].some(o=>o.value===slot.type);$('typeSel').value=known?slot.type:'__custom__';$('customTypeInput').hidden=known;$('customTypeInput').value=known?'':slot.type;
   $('speakerInput').value=slot.speaker;$('topicInput').value=slot.topic;$('photoFitSel').value=slot.photoFit||'cover';$('photoZoom').value=slot.photoZoom||1;$('photoY').value=slot.photoY??50;$('slotFontScale').value=String(slot.fontScale||1);$('zoomValue').value=Math.round((slot.photoZoom||1)*100)+'%';draftPhoto=slot.photo||null;updatePhotoPreview();$('photoInput').value='';
-  const match=LIBRARY.find(p=>p.photo===slot.photo&&p.speaker.replace(/\s/g,'')===slot.speaker.replace(/\s/g,''));$('librarySel').value=match?.id||'';$('deleteSlotBtn').hidden=!slots[selectedSlot];$('saveSlotBtn').textContent=slots[selectedSlot]?'Simpan perubahan':'Tambah kuliah';
+  const match=slot.speaker&&speakerLibrary().find(p=>speakerKey(p.speaker)===speakerKey(slot.speaker));$('librarySearch').value='';renderLibraryOptions();$('librarySel').value=match?.id||'';$('deleteSlotBtn').hidden=!slots[selectedSlot];$('saveSlotBtn').textContent=slots[selectedSlot]?'Simpan perubahan':'Tambah kuliah';
  }
  updateStatus();
 }
@@ -685,7 +779,7 @@ function saveSlot(event){
  event.preventDefault();const slots=current.entries[selectedDate]||[];if(selectedSlot>=slots.length&&(slots.length>=2||current.banners[selectedDate]?.mode==='full'||(current.banners[selectedDate]?.mode==='mixed'&&slots.length>=1))){toast('Petak ini sudah penuh.');return;}
  const type=$('typeSel').value==='__custom__'?$('customTypeInput').value.trim():$('typeSel').value;if(!type){toast('Isi tajuk program dahulu.');return;}
  const slot=normalSlot({type,speaker:$('speakerInput').value.trim(),topic:$('topicInput').value.trim(),photo:draftPhoto,photoFit:$('photoFitSel').value,photoZoom:$('photoZoom').value,photoY:$('photoY').value,fontScale:$('slotFontScale').value,source:'manual'});
- if(slots[selectedSlot])slots[selectedSlot]=slot;else{slots.push(slot);selectedSlot=slots.length-1;}current.entries[selectedDate]=slots;markChanged();renderPoster();fillEditor();toast('Perubahan '+selectedDate+' hb disimpan.');
+ if(slots[selectedSlot])slots[selectedSlot]=slot;else{slots.push(slot);selectedSlot=slots.length-1;}current.entries[selectedDate]=slots;const newSpeaker=slot.type!=='Bacaan Yasin & Tahlil'&&rememberSpeaker(slot,true);if(newSpeaker)renderRuleSpeakers();markChanged();renderPoster();fillEditor();toast('Perubahan '+selectedDate+' hb disimpan.'+(newSpeaker?' Penceramah disimpan dalam senarai.':''));
 }
 function restoreDay(){if(!discardDraft())return;if(!confirm('Pulihkan kuliah default pada '+selectedDate+' hb? Acara dan perubahan pada tarikh ini akan dibuang.'))return;const defaults=generateMonth(current.year,current.month);if(defaults.entries[selectedDate])current.entries[selectedDate]=defaults.entries[selectedDate];else delete current.entries[selectedDate];delete current.banners[selectedDate];current.changedDays=current.changedDays.filter(d=>d!==selectedDate);current.dirty=true;selectedSlot=0;editMode='slot';persist();renderPoster();fillEditor();toast('Default tarikh ini dipulihkan.');}
 function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}
@@ -711,7 +805,7 @@ async function importData(file){
   for(const [k,v] of Object.entries(data.colors||{}))if(k.length<=80&&/^#[0-9a-f]{6}$/i.test(v))Object.defineProperty(project.settings.colors,k,{value:v,writable:true,enumerable:true,configurable:true});
   if(asset(data.bg?.image))project.settings.bgImage=data.bg.image;
  }else throw Error('Fail ini bukan data jadual yang disokong.');
- current=project.months[project.active];selectedDate=1;selectedSlot=0;editMode='slot';syncMonthControls();persist();renderPoster();fillEditor();toast('Data berjaya dibuka.');
+ project.speakers??=[];seedSpeakersFromMonths();current=project.months[project.active];selectedDate=1;selectedSlot=0;editMode='slot';syncMonthControls();persist();renderPoster();fillEditor();toast('Data berjaya dibuka.');
 }
 async function combineLogos(refs){const c=document.createElement('canvas');c.width=700;c.height=390;const ctx=c.getContext('2d');for(let i=0;i<refs.length;i++){const im=await new Promise((r,j)=>{const x=new Image();x.onload=()=>r(x);x.onerror=j;x.src=asset(refs[i]);});const scale=Math.min(330/im.width,370/im.height),w=im.width*scale,h=im.height*scale;ctx.drawImage(im,i*350+(350-w)/2,(390-h)/2,w,h);}return c.toDataURL('image/png');}
 async function exportCanvas(){
@@ -756,15 +850,18 @@ function saveDonation(e){
 function openSettings(){const p=project.profile,s=project.settings;$('masjidNameInput').value=p.masjidName;$('addressInput').value=p.address;$('phoneInput').value=p.phone;$('bgColorInput').value=s.bgTop;$('bgBottomInput').value=s.bgBottom;$('compactCheck').checked=s.compact;$('clearBgCheck').checked=false;['logosInput','mosqueInput','bgImageInput'].forEach(id=>$(id).value='');$('colorPickers').innerHTML=Object.entries(s.colors).map(([type,color],i)=>`<div class="color-setting"><label for="color-${i}">${escapeHtml(type)}</label><input id="color-${i}" data-color="${escapeHtml(type)}" type="color" value="${colorValue(color,'#576a80')}"></div>`).join('');$('settingsDialog').showModal();}
 async function saveSettings(e){e.preventDefault();try{const p=clone(project.profile),s=clone(project.settings);p.masjidName=$('masjidNameInput').value.trim()||DEFAULT_PROFILE.masjidName;p.address=$('addressInput').value.trim();p.phone=$('phoneInput').value.trim();if($('logosInput').files[0])p.logos=await upload($('logosInput').files[0],900);if($('mosqueInput').files[0])p.masjidPhoto=await upload($('mosqueInput').files[0],1400);s.bgTop=$('bgColorInput').value;s.bgBottom=$('bgBottomInput').value;s.compact=$('compactCheck').checked;if($('clearBgCheck').checked)s.bgImage=null;if($('bgImageInput').files[0])s.bgImage=await upload($('bgImageInput').files[0],2200);document.querySelectorAll('[data-color]').forEach(el=>s.colors[el.dataset.color]=el.value);project.profile=p;project.settings=s;persist();renderPoster();$('settingsDialog').close();toast('Tetapan poster disimpan.');}catch(e){toast(e.message);}}
 function bind(){
- $('appLogo').src=asset('@logoMasjid');$('monthSel').innerHTML=MONTH_NAMES.map((m,i)=>`<option value="${i}">${m}</option>`).join('');$('librarySel').insertAdjacentHTML('beforeend',LIBRARY.map(p=>`<option value="${p.id}">${escapeHtml(p.speaker.replace(/\n/g,' '))}</option>`).join(''));
- $('rulesList').innerHTML=ROSTER.slice().sort((a,b)=>((a.day+6)%7)-((b.day+6)%7)||a.nth-b.nth).map(p=>`<div class="rule-item"><b>${DAYS[p.day]} ke-${p.nth} · ${escapeHtml(p.type)}</b>${escapeHtml(p.speaker.replace(/\n/g,' '))}</div>`).join('')+'<div class="rule-item"><b>Khamis setiap minggu</b>Bacaan Yasin &amp; Tahlil</div><div class="rule-item"><b>Jumaat ketiga</b>USTAZ MOHD HASNOL. Semua Jumaat boleh diubah mengikut arahan Naqib.</div>';
+ $('appLogo').src=asset('@logoMasjid');$('monthSel').innerHTML=MONTH_NAMES.map((m,i)=>`<option value="${i}">${m}</option>`).join('');renderLibraryOptions();renderRuleSpeakers();
+ $('deleteSpeakerBtn').onclick=deleteSpeaker;$('ruleAddBtn').onclick=addRule;$('rulesList').onclick=e=>{const b=e.target.closest('[data-rule]');if(b)deleteRule(b.dataset.rule);};
+ renderRules();
  $('monthSel').onchange=()=>switchMonth(+$('yearInput').value,+$('monthSel').value);$('yearInput').onchange=()=>switchMonth(+$('yearInput').value,+$('monthSel').value);$('dateSel').onchange=()=>{const d=+$('dateSel').value;selectDay(d);$('dateSel').value=selectedDate;};
  $('grid').onclick=e=>{const cell=e.target.closest('[data-day]');if(cell)selectDay(+cell.dataset.day);};$('grid').onkeydown=e=>{if(['Enter',' '].includes(e.key)&&e.target.dataset.day){e.preventDefault();selectDay(+e.target.dataset.day);}};
  $('slotTabs').onclick=e=>{const slot=e.target.closest('[data-slot]'),banner=e.target.closest('[data-banner]');if((!slot&&!banner)||!discardDraft())return;editMode=banner?'banner':'slot';if(slot)selectedSlot=+slot.dataset.slot;fillEditor();};
  $('addSlotBtn').onclick=()=>{if(!discardDraft())return;selectedSlot=(current.entries[selectedDate]||[]).length;editMode='slot';fillEditor();};$('addBannerBtn').onclick=()=>{if(!discardDraft())return;editMode='banner';fillEditor();};
  const dirty=()=>{formDirty=true;$('saveStatus').textContent='Perubahan borang belum disimpan';};$('slotForm').oninput=dirty;$('slotForm').onchange=dirty;$('bannerForm').oninput=dirty;$('bannerForm').onchange=dirty;
  $('typeSel').onchange=()=>{$('customTypeInput').hidden=$('typeSel').value!=='__custom__';formDirty=true;};
- $('librarySel').onchange=()=>{const p=LIBRARY.find(x=>x.id===$('librarySel').value);if(!p)return;$('speakerInput').value=p.speaker;$('topicInput').value=$('typeSel').value==='Tazkirah Jumaat'?'UMUM':p.topic;if($('typeSel').value!=='Tazkirah Jumaat')$('typeSel').value=p.type;draftPhoto=p.photo;$('photoZoom').value=1;$('photoY').value=50;$('zoomValue').value='100%';updatePhotoPreview();formDirty=true;};
+ $('librarySearch').oninput=()=>{const list=renderLibraryOptions();if(list.length===1&&$('librarySel').value!==list[0].id){$('librarySel').value=list[0].id;$('librarySel').onchange();}};
+ $('librarySearch').onkeydown=e=>{if(e.key!=='Enter')return;e.preventDefault();const first=$('librarySel').options[1];if(first){$('librarySel').value=first.value;$('librarySel').onchange();}};
+ $('librarySel').onchange=()=>{$('deleteSpeakerBtn').disabled=!$('librarySel').value;const p=speakerLibrary().find(x=>x.id===$('librarySel').value);if(!p)return;$('speakerInput').value=p.speaker;$('topicInput').value=$('typeSel').value==='Tazkirah Jumaat'?'UMUM':p.topic;if($('typeSel').value!=='Tazkirah Jumaat')$('typeSel').value=p.type;draftPhoto=p.photo;$('photoZoom').value=1;$('photoY').value=50;$('zoomValue').value='100%';updatePhotoPreview();formDirty=true;};
  $('photoInput').onchange=()=>handleUpload('photoInput',v=>{draftPhoto=v;updatePhotoPreview();formDirty=true;});$('clearPhotoBtn').onclick=()=>{draftPhoto=null;updatePhotoPreview();formDirty=true;};$('photoZoom').oninput=()=>{$('zoomValue').value=Math.round(+$('photoZoom').value*100)+'%';};
  $('slotForm').onsubmit=saveSlot;$('cancelSlotBtn').onclick=()=>fillEditor();$('deleteSlotBtn').onclick=()=>{const slots=current.entries[selectedDate];if(!slots?.[selectedSlot])return;if(!confirm('Padam slot ini daripada '+selectedDate+' hb?'))return;slots.splice(selectedSlot,1);if(!slots.length)delete current.entries[selectedDate];selectedSlot=0;markChanged();renderPoster();fillEditor();};$('restoreDayBtn').onclick=restoreDay;
  $('bannerImgInput').onchange=()=>handleUpload('bannerImgInput',v=>{draftBanner.img=v;$('bannerPreview').src=v;$('bannerPreview').hidden=false;formDirty=true;},1400);
@@ -775,8 +872,8 @@ function bind(){
  $('settingsBtn').onclick=openSettings;$('settingsForm').onsubmit=saveSettings;$('helpBtn').onclick=()=>$('helpDialog').showModal();document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());
  $('donationBtn').onclick=openDonation;$('donationForm').onsubmit=saveDonation;$('donationQrInput').onchange=changeDonationQr;$('donationPlacement').onchange=()=>{$('donationFallbackField').hidden=$('donationPlacement').value==='footer';};$('defaultDonationQrBtn').onclick=()=>{draftDonationQr=DEFAULT_DONATION.qr;updateDonationPreview();};
  $('paperSizeSel').onchange=()=>{project.settings.paperSize=$('paperSizeSel').value;persist();updateStatus();};$('exportPngBtn').onclick=()=>doExport('png');$('exportPdfBtn').onclick=()=>doExport('pdf');$('saveDataBtn').onclick=()=>{if(formDirty)toast('Perubahan borang belum disimpan. Simpan perubahan dahulu untuk memasukkannya dalam sandaran.');else exportData();};$('loadDataBtn').onclick=()=>{if(discardDraft())$('uploadDataInput').click();};$('uploadDataInput').onchange=async()=>{try{await importData($('uploadDataInput').files[0]);}catch(e){toast('Gagal membuka data: '+e.message);}$('uploadDataInput').value='';};
- window.addEventListener('beforeunload',e=>{if(formDirty){e.preventDefault();e.returnValue='';}});window.addEventListener('resize',resizePreview);new ResizeObserver(resizePreview).observe($('previewViewport'));syncMonthControls();renderPoster();fillEditor();document.fonts.ready.then(()=>fitText());
+ window.addEventListener('beforeunload',e=>{if(formDirty||serverDirty||serverSaving){e.preventDefault();e.returnValue='';}});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&SERVER_MODE)flushServerSave();});window.addEventListener('resize',resizePreview);new ResizeObserver(resizePreview).observe($('previewViewport'));syncMonthControls();renderPoster();fillEditor();document.fonts.ready.then(()=>fitText());
 }
-bind();
+loadStored().then(bind);
 </script>
 </body></html>
